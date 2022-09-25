@@ -1,7 +1,7 @@
 from email.mime import image
 import tensorflow as tf
 from tensorflow import keras
-from tensorflow.keras import layers
+from keras import layers
 import matplotlib.pyplot as plt
 import plotly.express as px
 import numpy as np
@@ -28,13 +28,12 @@ TODO = [
 ]
 
 # DATASETS
-DATASET_FOLDER              = "datasets/pokemon/"
+DATASET_FOLDER              = "datasets/cracks/"
 TRAIN_VALIDATION_DATASET    = DATASET_FOLDER + "tv_dataset/"
 TEST_DATASET                = DATASET_FOLDER + "t_dataset/"
 ALLOWED_EXTENSIONS          = [ ".jpg", ".jpeg", ".png" ]
 VALIDATION_RATIO            = .2
 IMAGE_SIZE                  = (180, 180)
-NUM_CLASSES                 = 150
 
 # SAVES
 SAVES_PATH                          = "./saves/"
@@ -176,6 +175,9 @@ if "train" in TODO:
         plt.show()
     # visualizeDatasetSample(train_ds)
 
+    class_names  = train_ds.class_names
+    class_number = len(train_ds.class_names)
+
     pass
 
 if "evaluate" or "test" in TODO:
@@ -190,7 +192,8 @@ if "evaluate" or "test" in TODO:
         label_mode="categorical"
     )
 
-    class_names = test_ds.class_names
+    class_names  = test_ds.class_names
+    class_number = len(test_ds.class_names)
 
 ####################################################################################################
 ###> Using image data augmentation
@@ -282,7 +285,7 @@ if "train" in TODO or "evaluate" in TODO or "test" in TODO:
 
         return keras.Model(inputs, outputs)
 
-    model = make_model(input_shape=IMAGE_SIZE + (3,), num_classes=NUM_CLASSES)
+    model = make_model(input_shape=IMAGE_SIZE + (3,), num_classes=class_number)
 
     # print()
     # print(model.summary())
