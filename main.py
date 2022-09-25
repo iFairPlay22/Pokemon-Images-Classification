@@ -28,7 +28,7 @@ TODO = [
 ]
 
 # DATASETS
-DATASET_FOLDER              = "datasets/cracks/"
+DATASET_FOLDER              = "datasets/pokemon/"
 TRAIN_VALIDATION_DATASET    = DATASET_FOLDER + "tv_dataset/"
 TEST_DATASET                = DATASET_FOLDER + "t_dataset/"
 ALLOWED_EXTENSIONS          = [ ".jpg", ".jpeg", ".png" ]
@@ -166,7 +166,7 @@ if "train" in TODO:
     def visualizeDatasetSample(dataset):
         plt.figure("Dataset sample", figsize=(10, 10))
         for images, labels in dataset.take(1):
-            for i in range(9):
+            for i in range(min(9, len(images))):
                 ax = plt.subplot(3, 3, i + 1)
                 plt.imshow(images[i].numpy().astype("uint8"))
                 plt.title(int(labels[i]))
@@ -210,7 +210,7 @@ if "train" in TODO or "evaluate" in TODO or "test" in TODO:
     def visualizeDataAugmentationSample(dataset, data_augmentation):
         plt.figure("Data augmentation", figsize=(10, 10))
         for images, _ in dataset.take(1):
-            for i in range(9):
+            for i in range(min(9, len(images))):
                 augmented_images = data_augmentation(images)
                 ax = plt.subplot(3, 3, i + 1)
                 plt.imshow(augmented_images[0].numpy().astype("uint8"))
@@ -409,9 +409,10 @@ if "evaluate" in TODO:
     def show_prediction_samples(model, ds):
     
         plt.figure("Prediction samples", figsize=(10, 10))
+
         for images, labels in ds.take(1):
 
-            for i in range(9):
+            for i in range(min(9, len(images))):
 
                 numpy_image = images[i].numpy().astype("uint8")
                 extracted_prediction = makePrediction(model, numpy_image)
