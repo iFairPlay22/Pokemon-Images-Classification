@@ -1,7 +1,5 @@
-datasets/t_dataset/*
-datasets/tv_dataset/*
-saves/checkpoints/*
-saves/graphs/*
+datasets/
+saves/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
